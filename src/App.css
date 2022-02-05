@@ -11,7 +11,7 @@
 .app-background {
 min-width: 100vw;
 min-height: 100vh;
-background-color: hsl(0, 0%, 10%);
+background-color: hsl(0, 0%, 8%);
 }
 .dashboard {
   background-color: azure;
@@ -21,6 +21,24 @@ background-color: hsl(0, 0%, 10%);
   background-position: center;
   background-image: url("./SeattleCity.jpeg");
   background-repeat: no-repeat;
+}
+
+.upper-panel {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  height: 20%;
+} 
+
+#curr-city {
+  
+  background-color: hsla(0, 0%, 100%, .8);
+  color:hsl(0, 0%, 12%);
+  font-size: 2rem;
+  padding: 2%;
+  border-radius: 10px;
+  
+  text-align: center;
 }
 
 
@@ -37,4 +55,5 @@ background-color: hsl(0, 0%, 10%);
     border-radius: 1rem;
     border-radius: 1rem ;
   }
+  #curr-city {border-radius: 1rem;}
 }

@@ -1,13 +1,13 @@
-.today-container {
+/* .today-container {
     background-color: rgba(255, 255, 255, 0.5);
     height: 25vh;
     padding: 5%;
     display: flex;
     flex-flow: column nowrap;
-    /* align-items: baseline; */
+  
     justify-content: space-between;
-}
-.today-container section {
+} */
+/* .today-container section {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
@@ -18,9 +18,4 @@
 .city {
     align-self: flex-end;
     background-color: darkorange;
-}
-.upper-panel {
-    display: flex;
-    flex-flow: row nowrap;
-    height: 35%;
-}
+} */

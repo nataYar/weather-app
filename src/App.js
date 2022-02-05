@@ -1,41 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import Forecast from './Forecast/Forecast';
 import Today from './Today/Today';
+import LocationSearch from './LocationSearch/LocationSearch';
+import { apiKey } from './constants'
 import './App.css';
 
 function App() {
-  const apiKey = 'IeeGLFBHWnNmFPygAVw7u0RR1Z6HX2ou';
-  const [locationKey, setLocationKey] = useState('152909_PC');
+  const [locationKey, setLocationKey] = useState('337241');
 
-  const [search, setSearch] = useState('')
   const [weatherData, setWeatherData] = useState([])
-  const [city, setCity] = useState('Atlanta');
+  const [currCity, setCurrCity] = useState('');
   const [lat, setLat] = useState('')  //34.2911249
   const [long, setLong] = useState('') //108.9422168
-
-  //  useEffect(() => {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       setLong(position.coords.longitude);
-  //       setLat(position.coords.latitude);
-  //       console.log('i shoud be on load')
-  //     });
-  //   }
-  // }, [])
-
-
-  // useEffect(() => {
-  //   fetch(`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=jAFhaphXz5OapXiGn1egDhGh46NPGvN6&q=${lat}%2C${long}`
-  //   )
-  //   .then(res => res.json())
-  //   .then(res => {
-  //     setLocationKey(res.Key)
-  //   })
-  // }, [lat])
+  // 34.2911249,108.9422168
   
+   useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLong(position.coords.longitude);
+        setLat(position.coords.latitude);
+      });
+    }
+  }, [])
+  //[] as doesn't need to re-run.
+ 
+ 
   useEffect(() => {
-    console.log(locationKey)
-  }, [locationKey])
+    fetch(`http://dataservice.accuweather.com/locations/v1/cities/geoposition/search?apikey=${apiKey}&q=${lat}%2C${long}`
+    )
+    .then(res => res.json())
+    .then(res => {
+      // console.log(res)
+      setLocationKey(res.Key)
+      setCurrCity(res.ParentCity.EnglishName)
+    })
+  }, [lat, long])
+  
 
    //convert 1 digit icon number into 2 digit number: 1 => 01
    const weatherIconNum = (num) => {
@@ -47,13 +47,9 @@ function App() {
     }  
   }
   
-  
-
-
   // we use API to get 5 day forecast
   useEffect(() => {
-    fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/locationKey=${locationKey}?apikey=${apiKey}`
-    )
+    fetch(`http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}?apikey=${apiKey}`)
     .then(res => res.json())
     .then(res => {
       setWeatherData(res.DailyForecasts
@@ -69,39 +65,40 @@ function App() {
         })
       )
     })
-  }, [])
-    
-  // useEffect(() => {
-  //   console.log(weatherData)
-  // }, [weatherData])
+  }, [locationKey])
 
-  const handleSubmit = () => {
+  useEffect(() => {
+    console.log(weatherData)
+  }, [weatherData])
 
+  useEffect(() => {
+    console.log(currCity)
+  }, [currCity])
+
+  const handleCityChange = (city) => {
+    setLocationKey(city.key)
+    setCurrCity(city.name)
+    console.log(city)
   }
-  const handleChange = () => {
 
+  const tempConverter = (num) => {
+    return (num-32) / 1.8
   }
-  
-// const today = weatherData[0];
+ 
   return (
     <div className="app-background">
       <div className="dashboard city-picture">
-        
-           
-        <Today />
+        <div className="upper-panel">
+          <LocationSearch 
 
-        <LocationSearch />
-            
-        <form onSubmit={handleSubmit}>
-          <input
-          type="text"
-          onChange={handleChange}
-          // required 
+          //changing currCity state from a child
+          onFound={search => handleCityChange(search) }
           />
-
-          <button type="submit" > My location </button>
-          <p id="demo"> P </p>
-        </form>
+          <div id="curr-city">
+            {currCity}<br/>
+            F / C
+          </div>
+        </div>
 
         {
           weatherData.length > 0 && weatherData.map((day, ind) => (
