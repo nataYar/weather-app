@@ -6,10 +6,11 @@ const LocationSearch = ({ onFound }) => {
     const [search, setSearch] = useState('')
     const [cityArray, setCityArray] = useState([])
 
-    const  triggerCitySearch = (event) => {
+    const triggerCitySearch = (event) => {
         if (event.keyCode === 13) {
-        event.preventDefault();
-        getLocation(search)
+            event.preventDefault();
+            getLocation(search);
+            setSearch('');
         }
         return
     }
@@ -27,7 +28,8 @@ const LocationSearch = ({ onFound }) => {
                         region: city.AdministrativeArea.EnglishName,
                         country: city.Country.EnglishName
                     } 
-                }))
+                })
+                )
                 
             } else {
                 setCityArray([])
@@ -36,11 +38,11 @@ const LocationSearch = ({ onFound }) => {
                 const textnode = document.createTextNode("not found");
                 notFound.appendChild(textnode);
                 notFound.classList.add("not-found");
-                document.querySelector('.input-section').appendChild(notFound);
-                //message is deleted in a 1.5 sec
+                document.querySelector('.search-container').appendChild(notFound);
+                // message is deleted in a 2 sec
                 setTimeout(function () {
-                    document.querySelector('.input-section').removeChild(notFound);
-                }, 1500)
+                    document.querySelector('.search-container').removeChild(notFound);
+                }, 2000)
             }
           }).catch(function(error) { 
             console.log('Request failed', error); 
@@ -51,25 +53,33 @@ const LocationSearch = ({ onFound }) => {
         onFound(city);
         setCityArray([])
     }
+
+    //sort alphabetically  by country  first, then  by region
+    const sortCities = ( a , b ) => {
+        if (a.country > b.country) return 1;
+        if (a.country < b.country) return -1;
+    
+        if (a.region > b.region) return 1;
+        if (a.region < b.region) return -1;
+  }
     return (
         <div className="search-container">
-            <div className="input-section">
-                <input id="search-area"
-                placeholder="Type the city and hit Enter"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                onKeyUp={(e) => triggerCitySearch(e)}
-                />
-                {/* <button type="submit" 
-                onClick={() => getLocation(search)} 
-                > BTN </button> */}
-            </div>
+            <input 
+            placeholder="Search the city"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            onKeyUp={(e) => triggerCitySearch(e)}
+            />
+            {/* <button type="submit" 
+            onClick={() => getLocation(search)} 
+            > BTN </button> */}
+          
 
             {/*  class is applied depending on an array of cities. initial state - zero cities */}
-            <div id="dropdown-scrollbar" className={cityArray.length === 0 ? "hidden" : "dropdown-scrollbar"}>
+            <div id="dropdown-scrollbar" className={cityArray.length === 0 ? "hidden" : "dropdown-scrollbar"} >
                 <div className="selection">
                 {
-                cityArray.map((city, ind) => (
+                cityArray.sort(sortCities).map((city, ind) => (
                     <div key={ind} className="city-dropdown" onClick={() => handleSelect(city) } >
                         <div> {city.country}, {city.region}, {city.name} </div>
                     </div>

@@ -1,7 +1,22 @@
 .day-container {
     height: auto;
     width: 100%;
-    /* margin-bottom: 2%; */
-    padding: 1%;
-    background-color: hsla(0, 0%, 100%, .7);
+    padding: 2% 0%;
+    /* margin-bottom: 5%; */
+    color: rgb(241, 241, 241);
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.day-container img {
+    height: 100%;
+    width: auto;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.temperature {
+    color: hsl(19, 96%, 69%);
 }
