@@ -23,26 +23,16 @@
   justify-content: space-between;
 }
 
-.forecast-container {
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  background-color: rgb(255, 255, 255);
-  height: auto;
-  margin: 2%; ;
-}
 
 .upper-panel {
   font-size: 1.2rem;
   height: 35vh;
-  /* background-color: darkred; */
   padding: 2%; 
   width: 100%;
-
-  background-image: url('https://image.shutterstock.com/image-photo/berlin-germany-viewed-above-spree-260nw-157503140.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  
+  background-repeat: no-repeat; 
+  position: absolute;
+  z-index: 1;
 }
 .upper-right-section {
   height: fit-content;
@@ -62,7 +52,6 @@
   font-weight: 500;
 }
 #curr-city {
-  /* padding: 2%; */
   text-transform: uppercase;
   color:hsl(4, 96%, 69%);
   font-weight: 900;
@@ -78,6 +67,7 @@
 .temp-type {
   padding: 0 .6rem;
   font-size: 1.2rem;
+  cursor: pointer;
 }
 
 .temp-type-on {
@@ -85,19 +75,22 @@
 }
 
 .forecast-container {
-  height: 69vh;
+  height: 68vh;
   background-color: hsl(0, 0%, 7%);
   position: absolute;
-  top: 31vh;
+  z-index: 10;
   width: 100%;
   left: 0;
+  top: 32vh;
   padding: 0%;
+  padding-top: 5%;
   margin: 0%;
 
   display: flex;
   flex-flow: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
 }
+
 
 @media only screen and (min-width: 767px) {
   .app-background {
@@ -111,12 +104,14 @@
     width: 50%;
     border-radius: 1rem;
   }
-  .upper-panel {border-radius: 1rem;}
+  .upper-panel {
+    position: initial;
+    border-radius: 1rem;}
 
   .forecast-container {
     position: initial;
     background-color: hsl(0, 0%, 9%);
-    margin-top: -6%;
+    margin-top: -8%;
     width: 100%;
     border-radius: 1rem;
   }

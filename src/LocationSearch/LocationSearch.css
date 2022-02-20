@@ -18,6 +18,7 @@ input{
 .dropdown-scrollbar {
     position: absolute;
     bottom: 5vh;
+    /* margin-bottom: 3%; */
     max-height: 50%;
     width: 100%;
     background-color: hsl(0, 0%, 100%);
@@ -27,16 +28,14 @@ input{
 .selection { 
     display: flex;
     flex-flow: column nowrap;
-    /* max-height: 25%; */
-    /* overflow: scroll;  */
 }
 
 .hidden {
     height: fit-content;
 }
 .city-dropdown {
-   /* margin: 3% 0%; */
    padding: 2%;
+   cursor: pointer;
 }
 .not-found {
     position: absolute;

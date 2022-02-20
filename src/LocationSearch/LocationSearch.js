@@ -70,11 +70,7 @@ const LocationSearch = ({ onFound }) => {
             onChange={e => setSearch(e.target.value)}
             onKeyUp={(e) => triggerCitySearch(e)}
             />
-            {/* <button type="submit" 
-            onClick={() => getLocation(search)} 
-            > BTN </button> */}
-          
-
+            
             {/*  class is applied depending on an array of cities. initial state - zero cities */}
             <div id="dropdown-scrollbar" className={cityArray.length === 0 ? "hidden" : "dropdown-scrollbar"} >
                 <div className="selection">
